@@ -4,15 +4,15 @@ const professionalCtrl = require("../controller/professional.controller");
 
 
 
-router.get( "/profesinales/:id", professionalCtrl.getPhotos);
+router.get( "/profesionales/:id", professionalCtrl.getProfessionals);
 
-router.get( "/profesionales", professionalCtrl.getPhotos);
+router.get( "/profesionales", professionalCtrl.getProfessionals);
 
-router.post( "/profesionales", professionalCtrl.postPhotos);
+router.post( "/profesionales", professionalCtrl.postProfessionals);
 
-router.put( "/profesionales", professionalCtrl.putPhotos ); 
+router.put( "/profesionales", professionalCtrl.putProfessionals); 
 
-router.delete( "/profesionales", professionalCtrl.deletePhotos );
+router.delete( "/profesionales", professionalCtrl.deleteProfessionals);
 
 
 module.exports = router;
