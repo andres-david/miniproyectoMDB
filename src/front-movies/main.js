@@ -19,18 +19,17 @@ let printTable = ( lista ) => {
 
     document.querySelector('.list__profesionales').style.display = "block";
 
-    let profesional;
+    let movie;
 
     for( let i = 0; i < lista.length ; i++ ){
 
-        profesional = lista[i];
+        movie = lista[i];
 
         let tr = `<tr>    
-            <td>${profesional.name}</td>
-            <td>${profesional.surname} </td>
-            <td>${profesional.profession}</td>
-            <td>${profesional.nationality}</td>
-            <td>${profesional.genre}</td>
+            <td>${movie.title}</td>
+            <td>${movie.releaseYear} </td>
+            <td>${movie.genre}</td>
+            <td>${movie.producer}</td>
         </tr>`;
 
         bodyList.innerHTML += tr;
@@ -43,20 +42,17 @@ function validar (user){
 
     let resultado = false;
 
-    if( user.name == '' || user.name == "null" ){
-        showToast("AVISO: Campo nombre no informado", "bg-warning");
+    if( user.title == '' || user.title == "null" ){
+        showToast("AVISO: Campo Titulo no informado", "bg-warning");
     }
-    else if( user.surname == '' || user.surname == "null"){
-        showToast("AVISO: Campo apellido no informado", "bg-warning");
-    }
-    else if( user.profession == '' || user.profession == "null" ){
-        showToast("AVISO: Campo profesión no informado", "bg-warning");
-    }
-    else if( user.nationality == '' || user.nationality == "null" ){
-        showToast("AVISO: Campo nacionalidad no informado", "bg-warning");
+    else if( user.releaseYear == '' || user.releaseYear == "null"){
+        showToast("AVISO: Campo Estreno no informado", "bg-warning");
     }
     else if( user.genre == '' || user.genre == "null" ){
-        showToast("AVISO: Campo genero no informado", "bg-warning");
+        showToast("AVISO: Campo Género no informado", "bg-warning");
+    }
+    else if( user.producer == '' || user.producer == "null" ){
+        showToast("AVISO: Campo Productora no informado", "bg-warning");
     }
     else{
         resultado = true;
@@ -84,11 +80,9 @@ async function getMovie(){
 
     const id  = document.querySelector('#id').value;
 
-    console.log(id);
-
     document.querySelector('#form').reset();
 
-    let url   = `http://localhost:3000/profesionales/${id}`;
+    let url   = `http://localhost:3000/peliculas/${id}`;
     let param = {
         headers: {
             "content-type": "application/json; charset=UTF-8"
@@ -100,6 +94,8 @@ async function getMovie(){
         let data = await fetch( url, param );
         let result = await data.json();
 
+        console.log( result );
+
         printTable( result );
         
     } catch (error) {
@@ -107,175 +103,170 @@ async function getMovie(){
     }
 }
 
-// async function postProfesional(){
+async function postMovie(){
     
-//     try {
+    try {
 
-//         let nombre       = document.querySelector('#nombre').value;
-//         let apellido     = document.querySelector('#apellido').value;
-//         let profesion    = document.querySelector('#profesion').value;
-//         let nacionalidad = document.querySelector('#nacionalidad').value;
-//         let genero       = document.querySelector('#genero').value;
+        let titulo     = document.querySelector('#titulo').value;
+        let fecha      = document.querySelector('#fecha').value;
+        let genero     = document.querySelector('#genero').value;
+        let productora = document.querySelector('#productora').value;
     
-//         let nuProfessional = {
-//             name: nombre,
-//             surname: apellido,
-//             profession: profesion,
-//             nationality: nacionalidad,
-//             genre: genero
-//         }
+        let nuMovie = {
+            title: titulo,
+            releaseYear: fecha,
+            genre: genero,
+            producer: productora
+        }
 
-//         document.querySelector('#form').reset();
+        document.querySelector('#form').reset();
     
-//         let url   = `http://localhost:3000/profesionales`;
+        let url   = `http://localhost:3000/peliculas`;
 
-//         if( validar( nuProfessional ) ){
+        if( validar( nuMovie ) ){
 
-//             let param = {
+            let param = {
     
-//                 headers:{
-//                     "content-type": "application/json; charset=UTF-8"
-//                 },
-//                 body: JSON.stringify( nuProfessional ),
-//                 method: "POST"
+                headers:{
+                    "content-type": "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify( nuMovie ),
+                method: "POST"
         
-//             }
+            }
     
-//             let data = await fetch ( url, param );
-//             let result = await data.json();
+            let data = await fetch ( url, param );
+            let result = await data.json();
 
-//             console.log( result );
+            console.log( result );
 
-//             if( result.err ){
-//                 showToast("ERROR: " + result.error, "bg-danger");
-//             }
-//             else{
-//                 showToast("Profesional Creado Correctamente", "bg-success");
-//             }
+            if( result.err ){
+                showToast("ERROR: " + result.error, "bg-danger");
+            }
+            else{
+                showToast("Pelicula Creada Correctamente", "bg-success");
+            }
 
-//         }
+        }
         
-//     } catch (error) {
+    } catch (error) {
         
-//         console.log( error );
+        console.log( error );
 
-//     }
+    }
 
-// }
+}
 
-// async function putProfesional(){
+async function putMovie(){
 
-//     try {
-//         let nombre       = document.querySelector('#nombre').value;
-//         let apellido     = document.querySelector('#apellido').value;
-//         let profesion    = document.querySelector('#profesion').value;
-//         let nacionalidad = document.querySelector('#nacionalidad').value;
-//         let genero       = document.querySelector('#genero').value;
-//         let id           = document.querySelector('#id').value;
+    try {
+        let titulo     = document.querySelector('#titulo').value;
+        let fecha      = document.querySelector('#fecha').value;
+        let genero     = document.querySelector('#genero').value;
+        let productora = document.querySelector('#productora').value;
+        let id         = document.querySelector('#id').value;
 
-//         let nuInfo = {
-//             "name": nombre ? nombre : null,
-//             "surname": apellido ? apellido : null,
-//             "profession": profesion ? profesion : null,
-//             "nationality": nacionalidad ? nacionalidad : null,
-//             "genre": genero ? genero : null,
-//             "id": id,
-//         }
+        let nuInfo = {
+            "title": titulo ? titulo : null,
+            "releaseYear": fecha ? fecha : null,
+            "genre": genero ? genero : null,
+            "producer": productora ? productora : null,
+            "id": id,
+        }
 
-//         let infoDef = {}  
+        let infoDef = {}  
     
-//         for(prop in nuInfo){
+        for(prop in nuInfo){
             
-//             if(nuInfo[prop] != null){
-//             infoDef[prop] = nuInfo[prop]
-//             }
-//         }
+            if(nuInfo[prop] != null){
+            infoDef[prop] = nuInfo[prop]
+            }
+        }
 
-//         document.querySelector('#form').reset();
+        document.querySelector('#form').reset();
     
-//         let url   = `http://localhost:3000/profesionales`;
+        let url   = `http://localhost:3000/peliculas`;
 
-//         if( validarId( infoDef ) ){
+        if( validarId( infoDef ) ){
 
-//             let param = {
+            let param = {
     
-//                 headers:{
-//                     "content-type": "application/json; charset=UTF-8"
-//                 },
-//                 body: JSON.stringify( infoDef ),
-//                 method: "PUT"
+                headers:{
+                    "content-type": "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify( infoDef ),
+                method: "PUT"
         
-//             }
+            }
     
-//             console.log( param );
+            console.log( param );
     
-//             let data   = await fetch ( url, param );
-//             let result = await data.json();
+            let data   = await fetch ( url, param );
+            let result = await data.json();
 
-//             console.log( result );
+            console.log( result );
     
-//             if( result.error ){
-//                 showToast("ERROR: " + result.error, "bg-danger");
-//             }
-//             else{
-//                 showToast("Usuario Actualizado Correctamente", "bg-success");
-//             }
+            if( result.error ){
+                showToast("ERROR: " + result.error, "bg-danger");
+            }
+            else{
+                showToast("Pelicula Actualizada Correctamente", "bg-success");
+            }
             
-//         }
+        }
     
-
-//     } catch (error) {
+    } catch (error) {
         
-//         console.log( error );
+        console.log( error );
 
-//     }
+    }
 
-// }
+}
 
-// async function deleteProfesional(){
+async function deleteMovie(){
 
-//     try {
-//         let i = document.getElementById('id').value;
+    try {
+        let i = document.getElementById('id').value;
 
-//         let indi = {
-//             "id": i,
-//         }
+        let indi = {
+            "id": i,
+        }
 
-//         document.querySelector('#form').reset();
+        document.querySelector('#form').reset();
 
-//         let url   = `http://localhost:3000/profesionales`;
+        let url   = `http://localhost:3000/peliculas`;
 
-//         if( validar(indi) ){
+        if( validar(indi) ){
 
-//             let param = {
+            let param = {
             
-//                 headers:{
-//                     "content-type": "application/json; charset=UTF-8"
-//                 },
-//                 body: JSON.stringify( indi ),
-//                 method: "DELETE"
-//             }
+                headers:{
+                    "content-type": "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify( indi ),
+                method: "DELETE"
+            }
             
-//             console.log( param );
+            console.log( param );
             
-//             let data   = await fetch( url, param );
-//             let result = await data.json();
+            let data   = await fetch( url, param );
+            let result = await data.json();
     
-//             if( result.err ){
-//                 showToast("ERROR: " + result.err, "bg-danger");
-//             }
-//             else{
-//                 showToast("Usuario Eliminado Correctamente", "bg-success");
-//             }
+            if( result.err ){
+                showToast("ERROR: " + result.err, "bg-danger");
+            }
+            else{
+                showToast("Pelicula Eliminada Correctamente", "bg-success");
+            }
 
-//         }
+        }
 
-//     } 
-//     catch (error) {
+    } 
+    catch (error) {
         
-//         console.log( error );
+        console.log( error );
 
-//     }
+    }
 
-// }
+}
 

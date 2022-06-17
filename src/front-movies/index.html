@@ -52,18 +52,18 @@
 
                 <form id="form">
 
-                    <input type="text" id="title" placeholder="Titulo*">
-                    <input type="date" id="date" placeholder="Estreno*">
+                    <input type="text" id="titulo" placeholder="Titulo*">
+                    <input type="date" id="fecha" placeholder="Estreno*">
                     <input type="text" id="genero" placeholder="Género*">
                     <input type="text" id="productora" placeholder="Productora*">
                     <input type="text" id="id" placeholder="id">                 
                     
                     <div class="btns">
                         
-                        <a id="btn__mostrar" href="#" onclick="getProfesional()">Mostrar</a>
-                        <a id="btn__crear" href="#" onclick="postProfesional()">Crear</a>
-                        <a id="btn__actualizar" href="#" onclick="putProfesional()">Actualizar</a>
-                        <a id="btn__eliminar" href="#" onclick="deleteProfesional()">Eliminar</a>
+                        <a id="btn__mostrar" href="#" onclick="getMovie()">Mostrar</a>
+                        <a id="btn__crear" href="#" onclick="postMovie()">Crear</a>
+                        <a id="btn__actualizar" href="#" onclick="putMovie()">Actualizar</a>
+                        <a id="btn__eliminar" href="#" onclick="deleteMovie()">Eliminar</a>
 
                     </div>
                 
@@ -81,15 +81,13 @@
                     
                     <tr>
                     
-                        <th>Nombre</th>
+                        <th>Titulo</th>
                     
-                        <th>Apellido</th>
-
-                        <th>Profesión</th>
-
-                        <th>Nacionalidad</th>
+                        <th>Estreno</th>
 
                         <th>Género</th>
+
+                        <th>Productora</th>
                     
                     </tr>
 
