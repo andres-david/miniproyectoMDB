@@ -172,9 +172,6 @@ function putMovie( request, response ){
     let title = request.body.title;
     let releaseYear = request.body.releaseYear;
     let genre = request.body.genre;
-    let actors = request.body.actors;
-    let writers = request.body.writers;
-    let directors = request.body.directors;
     let producer = request.body.producer;
     let id = request.body.id;
 
